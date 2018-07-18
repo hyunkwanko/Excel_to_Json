@@ -1,1 +1,1 @@
-5 1 2 3 7 8 4 10 19 16
+I am studying programming by using Python

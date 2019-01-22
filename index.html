@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
 </head>
 <body>
-<h1>Hello World!</h1>
+<h1>Hello World!!!</h1>
  
-<input type="file" id="selfile" accept=".xlsx, .txt">
+<input type="file" id="selfile" accept=".xls, .xlsx, .txt,">
 <button id="btn1" value="Get Excel Data" onclick="getExcelFile()">Click</button>
 <div id="grid">
  
@@ -18,11 +18,12 @@
 <script>
     function getExcelFile() {
         const fObj = document.getElementById("selfile");
-        console.log(fObj);
+        // console.log(fObj);
         if(fObj.value === '') {
             alert('Please Select File');
         } else {
             const selectedFile = fObj.files[0];
+            console.log(fObj.files);
             // console.log(selectedFile.path);
             // console.log('Name :' + selectedFile.name + '/ Size : ' + selectedFile.size);
  
@@ -37,8 +38,7 @@
                     var workbook = XLSX.read(data, {type: 'array'});
                     // console.log(workbook);
                     var toHtml = XLSX.utils.sheet_to_html(workbook.Sheets['Sheet1'], {header:1});
-                    document.write(toHtml);
-                    // document.getElementById('grid').innerHTML = toHtml;
+                    document.getElementById('grid').innerHTML = toHtml;
                 }
             };
             reader.readAsArrayBuffer(selectedFile);

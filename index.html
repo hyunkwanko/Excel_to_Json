@@ -8,7 +8,7 @@
         <h1>Excel to Json</h1>
         
         <input type="file" id="getFile" accept=".xls, .xlsx, .txt">
-        <button id="btn1" onclick="getExcelFile()">Click</button>
+        <button id="button01" onclick="getExcelFile()">Click</button>
         <div id="grid"></div>
     </body>
 
@@ -49,7 +49,7 @@
                         var desired_value = (desired_cell ? desired_cell.v : undefined);
 
                         var range = XLSX.utils.decode_range(worksheet['!ref']);
-                        console.log(range);
+                        // console.log(range);
                         // console.log(range.s.r);
                         // console.log(range.e.r);
                         // console.log(range.s.c);
@@ -61,9 +61,17 @@
                                 // console.log(cell_address);
                                 /* if an A1-style address is needed, encode the address */
                                 var cell_ref = XLSX.utils.encode_cell(cell_address);
-                                console.log(worksheet[cell_ref] ? worksheet[cell_ref].v : undefined);
+                                // console.log(worksheet[cell_ref] ? worksheet[cell_ref].v : undefined);
                             }
                         }
+
+                        for(var R = range.s.r; R <= range.e.r; ++R) {
+                            var cell_address = {c:range.s.c, r:R};
+                            var cell_ref = XLSX.utils.encode_cell(cell_address);
+                            // console.log(cell_ref);
+                            console.log(worksheet[cell_ref] ? worksheet[cell_ref].v : undefined);
+                        }
+
 
                         // console.log(XLSX.utils.sheet_to_formulae(workbook.Sheets['Sheet1'], {header:3}));
                         document.getElementById('grid').innerHTML = XLSX.utils.sheet_to_html(worksheet);

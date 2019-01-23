@@ -47,8 +47,8 @@
 
                         /* Get the value */
                         var desired_value = (desired_cell ? desired_cell.v : undefined);
-                        // console.log(desired_value);
-                        // console.log(workbook.Sheets.Sheet1['!ref'] = 'A1:A3');
+                        console.log(desired_value);
+
                         var range = XLSX.utils.decode_range(workbook.Sheets.Sheet1['!ref']);
                         // console.log(range);
                         // console.log(range.s.r);
@@ -56,19 +56,18 @@
                         // console.log(range.s.c);
                         // console.log(range.e.c);
 
+                        // for(var R = range.s.r; R <= range.e.r; ++R) {
+                        //     for(var C = range.s.c; C <= range.e.c; ++C) {
+                        //         var cell_address = {c:C, r:R};
+                        //         console.log(cell_address);
+                        //         /* if an A1-style address is needed, encode the address */
+                        //         var cell_ref = XLSX.utils.encode_cell(cell_address);
+                        //         // console.log(cell_ref);
+                        //     }
+                        // }
 
-                        for(var R = range.s.r; R <= range.e.r; ++R) {
-                            for(var C = range.s.c; C <= range.e.c; ++C) {
-                                var cell_address = {c:C, r:R};
-                                console.log(cell_address);
-                                /* if an A1-style address is needed, encode the address */
-                                var cell_ref = XLSX.utils.encode_cell(cell_address);
-                                // console.log(cell_ref);
-                            }
-                        }
-
-                        // console.log(XLSX.utils.sheet_to_formulae(workbook.Sheets['Sheet1'], {header:3}));
-                        var toHtml = XLSX.utils.sheet_to_html(workbook.Sheets['Sheet1'], {header:3});
+                        console.log(XLSX.utils.sheet_to_formulae(workbook.Sheets['Sheet1'], {header:3}));
+                        var toHtml = XLSX.utils.sheet_to_html(worksheet, {header:3});
                         document.getElementById('grid').innerHTML = toHtml;
                     }
                 };

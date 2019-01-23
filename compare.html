@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="./js-xlsx-0.14-2.0/dist/xlsx.full.min.js"></script>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h1>Hello World!!!</h1>
+ 
+<input type="file" id="selfile" accept=".xls, .xlsx, .txt,">
+<button id="btn1" value="Get Excel Data" onclick="getExcelFile()">Click</button>
+<div id="grid">
+ 
+</div>
+</body>
+</html>
+ 
+<script>
+    var rABS = true; // true: readAsBinaryString ; false: readAsArrayBuffer
+    function handleFile(e) {
+        var files = e.target.files, f = files[0];
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var data = e.target.result;
+            if(!rABS) data = new Uint8Array(data);
+            var workbook = XLSX.read(data, {type: rABS ? 'binary' : 'array'});
+
+            /* DO SOMETHING WITH workbook HERE */
+        };
+        if(rABS) reader.readAsBinaryString(f); 
+        else reader.readAsArrayBuffer(f);
+    }
+    input_dom_element.addEventListener('change', handleFile, false);
+</script>

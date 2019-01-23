@@ -1,49 +1,46 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <script src="./js-xlsx-0.14-2.0/dist/xlsx.full.min.js"></script>
-    <meta charset="UTF-8">
-</head>
-<body>
-<h1>Excel to Json</h1>
- 
-<input type="file" id="getFile" accept=".xls, .xlsx, .txt,">
-<button id="btn1" value="Get Excel Data" onclick="getExcelFile()">Click</button>
-<div id="grid">
- 
-</div>
-</body>
+    <head>
+        <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <h1>Excel to Json</h1>
+        
+        <input type="file" id="getFile" accept=".xls, .xlsx, .txt">
+        <button id="btn1" onclick="getExcelFile()">Click</button>
+        <div id="grid"></div>
+    </body>
+
+    <script>
+        function getExcelFile() {
+            const excelFile = document.getElementById("getFile");
+            // console.log(excelFile);
+    
+            if(excelFile.value === '') {
+                alert('Please Select File');
+            } else {
+                const selectedFile = excelFile.files[0];
+                // console.log('Name :' + selectedFile.name + '/ Size : ' + selectedFile.size);
+        
+                var reader = new FileReader();
+        
+                reader.onload = function(e) {
+                    if(e.target.readyState == FileReader.DONE) {
+                        var data = e.target.result;
+                        data = new Uint8Array(data);
+        
+                        // call 'xlsx' to read the file
+                        var workbook = XLSX.read(data, {type: 'array'});
+                        // console.log(workbook);
+                        console.log(XLSX.utils.sheet_to_html(workbook.Sheets['Sheet1'], {header:1}));
+                        var toHtml = XLSX.utils.sheet_to_html(workbook.Sheets['Sheet1'], {header:1});
+                        document.getElementById('grid').innerHTML = toHtml;
+                    }
+                };
+                reader.readAsArrayBuffer(selectedFile);
+            }
+        }
+    </script>        
 </html>
  
-<script>
-    function getExcelFile() {
-        const excelFile = document.getElementById("getFile");
-        // console.log(excelFile);
-        // console.log(excelFile.value);
-
-        if(excelFile.value === '') {
-            alert('Please Select File');
-        } else {
-            const selectedFile = excelFile.files[0];
-            console.log(excelFile.files[0]);
-            // console.log(selectedFile.path);
-            // console.log('Name :' + selectedFile.name + '/ Size : ' + selectedFile.size);
- 
-            var reader = new FileReader();
- 
-            reader.onload = function(e) {
-                if(e.target.readyState == FileReader.DONE) {
-                    var data = e.target.result;
-                    data = new Uint8Array(data);
- 
-                    // call 'xlsx' to read the file
-                    var workbook = XLSX.read(data, {type: 'array'});
-                    // console.log(workbook);
-                    var toHtml = XLSX.utils.sheet_to_html(workbook.Sheets['Sheet1'], {header:1});
-                    document.getElementById('grid').innerHTML = toHtml;
-                }
-            };
-            reader.readAsArrayBuffer(selectedFile);
-        }
-    }
-</script>

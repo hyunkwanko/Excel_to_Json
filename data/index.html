@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <h1>Excel to Json</h1>
+        
+        <input type="file" id="getFile" accept=".xls, .xlsx, .txt">
+        <button id="button01" onclick="getExcelFile()">Click</button>
+        <div id="grid"></div>
+    </body>
+
+    <script>
+        function getExcelFile() {
+            const excelFile = document.getElementById("getFile");
+            // console.log(excelFile);
+    
+            if(excelFile.value === '') {
+                alert('Please Select File');
+            } else {
+                const selectedFile = excelFile.files[0];
+                // console.log('Name :' + selectedFile.name + '/ Size : ' + selectedFile.size);
+                var reader = new FileReader();
+        
+                reader.onload = function(e) {
+                    if(e.target.readyState == FileReader.DONE) {
+                        var data = e.target.result;
+                        data = new Uint8Array(data);
+        
+                        // call 'xlsx' to read the file
+                        var workbook = XLSX.read(data, {type: 'array'});
+
+                        // console.log(workbook);
+                        // console.log(workbook.SheetNames);
+                        // console.log(workbook.SheetNames[1]);
+
+                        var first_sheet_name = workbook.SheetNames[0]; // Sheet 1
+                        var address_of_cell = 'C2';
+
+                        /* Get worksheet */
+                        var worksheet = workbook.Sheets[first_sheet_name];
+                        // console.log(worksheet);
+
+                        /* Find desired cell */
+                        var desired_cell = worksheet[address_of_cell];
+                        // console.log(desired_cell);
+
+                        /* Get the value */
+                        var desired_value = (desired_cell ? desired_cell.v : undefined);
+                        console.log(desired_value);
+                        console.log(worksheet);
+                    }
+                };
+                reader.readAsArrayBuffer(selectedFile);
+            }
+        }
+    </script>        
+</html>
+ 

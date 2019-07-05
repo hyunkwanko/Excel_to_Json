@@ -1,0 +1,9 @@
+.xport, .btn {
+    display: inline;
+    text-align:center;
+}
+
+a { text-decoration: none }
+
+#data-table, #data-table th, #data-table td { border: 1px solid black }
+#data-table1, #data-table1 th, #data-table1 td { border: 1px solid black }

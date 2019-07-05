@@ -53,12 +53,19 @@
 		// console.log(wb)
 
 		var first_sheet_name = wb.SheetNames[2]; // Sheet 1
-		var address_of_cell = 'B6';
-		// console.log(address_of_cell)
+		var address_of_cell = '{c:1, r:4}';
+		var cell_address = {c:1, r:4};
+		/* if an A1-style address is needed, encode the address */
+		var cell_ref = XLSX.utils.encode_cell(cell_address);
+		// console.log(cell_ref);
 
 		/* Get worksheet */
 		var worksheet = wb.Sheets[first_sheet_name];
-		// console.log(worksheet);
+		// console.log(worksheet['!merges']);
+		// console.log(worksheet['!merges'].length);
+		console.log(worksheet['!merges'][0].s.r);
+		// var address_of_cell = worksheet['!merges'][0];
+		// console.log(worksheet[address_of_cell]);
 
 		/* Find desired cell */
 		var desired_cell = worksheet[address_of_cell];
@@ -66,11 +73,24 @@
 
 		/* Get the value */
 		var desired_value = (desired_cell ? desired_cell.v : undefined);
-		console.log(desired_value);
+		// console.log(desired_value);
+
+		var data = new Array(); // 배열 선언
 		document.getElementById("container").innerHTML = desired_value;
 
 		var ws = wb.Sheets[wb.SheetNames[2]];
-		console.log(ws);
+		var range = worksheet['!merges'];
+
+		// for(var R = range.s.r; R <= range.e.r; ++R) {
+		// 	for(var C = range.s.c; C <= range.e.c; ++C) {
+		// 		var cell_address = {c:C, r:R};
+		// 		/* if an A1-style address is needed, encode the address */
+		// 		var cell_ref = XLSX.utils.encode_cell(cell_address);
+		// 		console.log(cell_address);
+		// 	}
+		// }
+
+
 		// var html_string = XLSX.utils.sheet_to_html(ws, { id: "data-table", editable: true });
 		// document.getElementById("container").innerHTML = html_string;
 

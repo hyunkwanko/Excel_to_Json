@@ -36,17 +36,7 @@
 
 <b>Editable Data Table</b>
 </pre>
-<div id="container">
-	<table id="data-table">
-		<tbody>
-			<tr>
-				<td colspan="32" t="s" id="sjs-A1">
-					<span contenteditable="true">입력</span>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-</div><br><br>
+<div id="container"></div><br><br>
 <div id="container1"></div>
 
 <br />
@@ -60,10 +50,11 @@
 <script type="text/javascript">
 	var input_dom_element = document.getElementById("file");
 	function process_wb(wb) {
-		console.log(wb)
+		// console.log(wb)
 
-		var first_sheet_name = wb.SheetNames[0]; // Sheet 1
-		var address_of_cell = 'M19';
+		var first_sheet_name = wb.SheetNames[2]; // Sheet 1
+		var address_of_cell = 'B6';
+		// console.log(address_of_cell)
 
 		/* Get worksheet */
 		var worksheet = wb.Sheets[first_sheet_name];
@@ -71,15 +62,17 @@
 
 		/* Find desired cell */
 		var desired_cell = worksheet[address_of_cell];
-		console.log(desired_cell);
-		worksheet[address_of_cell].v = "현관";
+		// console.log(desired_cell);
 
 		/* Get the value */
 		var desired_value = (desired_cell ? desired_cell.v : undefined);
+		console.log(desired_value);
+		document.getElementById("container").innerHTML = desired_value;
 
-		var ws = wb.Sheets[wb.SheetNames[0]];
-		var html_string = XLSX.utils.sheet_to_html(ws, { id: "data-table", editable: true });
-		document.getElementById("container").innerHTML = html_string;
+		var ws = wb.Sheets[wb.SheetNames[2]];
+		console.log(ws);
+		// var html_string = XLSX.utils.sheet_to_html(ws, { id: "data-table", editable: true });
+		// document.getElementById("container").innerHTML = html_string;
 
 		// var ws = wb.Sheets[wb.SheetNames[1]];
 		// var html_string = XLSX.utils.sheet_to_html(ws, { id: "data-table1", editable: true });
